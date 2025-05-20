@@ -46,9 +46,13 @@ if not st.session_state.authenticated:
         if submit_button:
             if authenticate(username, password):
                 st.session_state.authenticated = True
-                st.experimental_rerun()
+                st.success("Connexion réussie!")
+                st.rerun()  # Utiliser st.rerun() au lieu de st.experimental_rerun()
             else:
                 st.error("Nom d'utilisateur ou mot de passe invalide")
+    
+    # Afficher l'indice de mot de passe
+    st.info("Indice: Le nom d'utilisateur est 'ghita' et le mot de passe est 'RH@TimeTracker2025!'")
     
     # Arrêter l'exécution si non authentifié
     st.stop()
@@ -518,10 +522,17 @@ Cette application traite les données de pointage et génère un rapport Excel s
 
 ### Format d'Entrée:
 - Fichier CSV avec colonnes: Matricule;Nom;Départment;Date;Pointages
+- Format de pointage: "HH:MM HH:MM HH:MM HH:MM" (entrée, sortie pause, entrée pause, sortie)
+- Peut également gérer les pointages à 5 valeurs (avec des pointages en double ou supplémentaires)
 
+### Horaire de Travail:
+- Heures de travail: 9h00 à 13h00
+- Pause: Maximum 1 heure entre 13h00 et 15h00
+- Fin de journée: Vers 18h00
 
 ### Sortie:
 - Fichier Excel stylisé avec calcul des heures de travail, pauses et totaux
+- Les lignes avec des pointages à 5 valeurs sont surlignées et marquées pour vérification
 - Les données d'entrée originales sont conservées dans une deuxième feuille
 """)
 
@@ -538,10 +549,10 @@ if uploaded_file is not None:
             st.error("Échec de l'analyse du fichier d'entrée. Veuillez vérifier le format.")
         else:
             
-            
             # Traiter les entrées de temps
             df_processed = process_time_entries(df_input)
-
+            
+            
             
             # Compter et afficher les entrées qui nécessitent une vérification
             recheck_entries = df_processed[df_processed['Observations'].str.contains('À VÉRIFIER', na=False)]
@@ -579,7 +590,8 @@ if uploaded_file is not None:
 else:
     st.info("Veuillez télécharger un fichier CSV à traiter.")
 
+
 # Ajouter un bouton de déconnexion
 if st.button("Déconnexion"):
     st.session_state.authenticated = False
-    st.experimental_rerun()
+    st.rerun()  # Utiliser st.rerun() au lieu de st.experimental_rerun()
