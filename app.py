@@ -522,13 +522,7 @@ Cette application traite les données de pointage et génère un rapport Excel s
 
 ### Format d'Entrée:
 - Fichier CSV avec colonnes: Matricule;Nom;Départment;Date;Pointages
-- Format de pointage: "HH:MM HH:MM HH:MM HH:MM" (entrée, sortie pause, entrée pause, sortie)
 - Peut également gérer les pointages à 5 valeurs (avec des pointages en double ou supplémentaires)
-
-### Horaire de Travail:
-- Heures de travail: 9h00 à 13h00
-- Pause: Maximum 1 heure entre 13h00 et 15h00
-- Fin de journée: Vers 18h00
 
 ### Sortie:
 - Fichier Excel stylisé avec calcul des heures de travail, pauses et totaux
